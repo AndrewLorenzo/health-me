@@ -1,0 +1,20 @@
+<!-- templates/profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Pengguna</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+    <div class="container">
+        <h2>Profil Pengguna</h2>
+        <p><strong>Nama:</strong> {{ user[1] }}</p>
+        <p><strong>Email:</strong> {{ user[2] }}</p>
+        <p><strong>Umur:</strong> {{ user[3] }}</p>
+        <p><strong>Alamat:</strong> {{ user[4] }}</p>
+        <a href="/">Kembali ke Form</a>
+    </div>
+</body>
+</html>

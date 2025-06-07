@@ -1,0 +1,30 @@
+<!-- templates/form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Data Pribadi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+    <div class="container">
+        <h2>Form Data Pribadi</h2>
+        <form method="POST" action="/submit">
+            <label>Nama:</label>
+            <input type="text" name="nama" required>
+
+            <label>Email:</label>
+            <input type="email" name="email" required>
+
+            <label>Umur:</label>
+            <input type="number" name="umur" required>
+
+            <label>Alamat:</label>
+            <textarea name="alamat" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
