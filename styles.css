@@ -1,0 +1,84 @@
+:root {
+  --green-main: #2ecc71;
+  --green-dark: #27ae60;
+  --green-light: #a3e4d7;
+  --white: #ffffff;
+  --gray-light: #f2f2f2;
+  --text-dark: #2c3e50;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--gray-light);
+  color: var(--text-dark);
+}
+
+header {
+  background-color: var(--green-main);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--white);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+nav a {
+  margin-left: 1rem;
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.hero {
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, var(--green-main), var(--green-light));
+  color: var(--white);
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 3rem 2rem;
+  background-color: var(--white);
+}
+
+.feature {
+  background-color: var(--green-light);
+  border-left: 6px solid var(--green-dark);
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+.feature h3 {
+  margin-top: 0;
+}
+
+footer {
+  background-color: var(--green-dark);
+  color: var(--white);
+  text-align: center;
+  padding: 1rem;
+}
