@@ -14,7 +14,8 @@
         <p><strong>Email:</strong> {{ user[2] }}</p>
         <p><strong>Umur:</strong> {{ user[3] }}</p>
         <p><strong>Alamat:</strong> {{ user[4] }}</p>
-        <a href="/">Kembali ke Form</a>
+        <!-- <a href="/">Kembali ke Form</a> -->
+        <a href="{{ url_for('edit', user_id=user[0]) }}"><button>Edit Data</button></a>
     </div>
 </body>
 </html>

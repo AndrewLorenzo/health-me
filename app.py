@@ -55,6 +55,30 @@ def profile(user_id):
     user = cursor.fetchone()
     return render_template('profile/profile.html', user=user)
 
+# --- Halaman edit data user ---
+@app.route('/edit/<int:user_id>')
+def edit(user_id):
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    user = cursor.fetchone()
+    return render_template('form/form.html', user=user, edit=True)
+
+# --- Proses update data ---
+@app.route('/update/<int:user_id>', methods=['POST'])
+def update(user_id):
+    nama = request.form['nama']
+    email = request.form['email']
+    umur = request.form['umur']
+    alamat = request.form['alamat']
+
+    cursor = db.cursor()
+    cursor.execute("""
+        UPDATE users SET name = %s, email = %s, age = %s, address = %s WHERE id = %s
+    """, (nama, email, umur, alamat, user_id))
+    db.commit()
+
+    return redirect(url_for('profile', user_id=user_id))
+
 # --- Jalankan app ---
 if __name__ == '__main__':
     app.run(debug=True)

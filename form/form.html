@@ -10,21 +10,22 @@
 <body>
     <div class="container">
         <h2>Form Data Pribadi</h2>
-        <form method="POST" action="/submit">
+        <form method="POST" action="{{ url_for('update', user_id=user[0]) if edit else url_for('submit') }}">
             <label>Nama:</label>
-            <input type="text" name="nama" required>
+            <input type="text" name="nama" value="{{ user[1] if edit else '' }}" required><br>
 
             <label>Email:</label>
-            <input type="email" name="email" required>
+            <input type="email" name="email" value="{{ user[2] if edit else '' }}" required><br>
 
             <label>Umur:</label>
-            <input type="number" name="umur" required>
+            <input type="number" name="umur" value="{{ user[3] if edit else '' }}" required><br>
 
             <label>Alamat:</label>
-            <textarea name="alamat" required></textarea>
+            <textarea name="alamat" required>{{ user[4] if edit else '' }}</textarea><br>
 
-            <button type="submit">Submit</button>
+            <button type="submit">{{ 'Update' if edit else 'Submit' }}</button>
         </form>
+
     </div>
 </body>
 </html>
