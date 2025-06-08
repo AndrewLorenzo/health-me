@@ -11,17 +11,27 @@
     <div class="container">
         <h2>Form Data Pribadi</h2>
         <form method="POST" action="{{ url_for('update', user_id=user[0]) if edit else url_for('submit') }}">
-            <label>Nama:</label>
-            <input type="text" name="nama" value="{{ user[1] if edit else '' }}" required><br>
+            <label>Nama Depan:</label>
+            <input type="text" name="first-name" value="{{ user[1] if edit else '' }}" required><br>
 
-            <label>Email:</label>
-            <input type="email" name="email" value="{{ user[2] if edit else '' }}" required><br>
+            <label>Nama Belakang:</label>
+            <input type="text" name="last-name" value="{{ user[2] if edit else '' }}" required><br>
 
             <label>Umur:</label>
-            <input type="number" name="umur" value="{{ user[3] if edit else '' }}" required><br>
+            <input type="number" name="age" value="{{ user[3] if edit else '' }}" required><br>
 
-            <label>Alamat:</label>
-            <textarea name="alamat" required>{{ user[4] if edit else '' }}</textarea><br>
+            <label>Tinggi Badan (cm):</label>
+            <input type="number" name="height" value="{{ user[4] if edit else '' }}" required><br>
+
+            <label>Berat Badan (kg):</label>
+            <input type="number" name="weight" value="{{ user[5] if edit else '' }}" required><br>
+
+            <label>Jenis Kelamin:</label>
+            <select name="sex" required>
+                <option value="" disabled {{ 'selected' if not edit }}>-- Pilih --</option>
+                <option value="Laki-laki" {{ 'selected' if edit and user[6] == 'Laki-laki' else '' }}>Laki-laki</option>
+                <option value="Perempuan" {{ 'selected' if edit and user[6] == 'Perempuan' else '' }}>Perempuan</option>
+            </select>
 
             <button type="submit">{{ 'Update' if edit else 'Submit' }}</button>
         </form>

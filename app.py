@@ -34,14 +34,19 @@ def form():
 # --- Submit form ke database ---
 @app.route('/submit', methods=['POST'])
 def submit():
-    nama = request.form['nama']
-    email = request.form['email']
-    umur = request.form['umur']
-    alamat = request.form['alamat']
+    firstName = request.form['first-name']
+    lastName = request.form['last-name']
+    age = request.form['age']
+    height = request.form['height']
+    weight = request.form['weight']
+    sex = request.form['sex']
+    bmi = int(weight) / ((int(height) / 100) ** 2)
+    # bloodType = request.form['blood-type']
+
 
     cursor = db.cursor()
-    cursor.execute("INSERT INTO users (name, email, age, address) VALUES (%s, %s, %s, %s)",
-                   (nama, email, umur, alamat))
+    cursor.execute("INSERT INTO users (FirstName, LastName, Age, Height, Weight, Sex, BMI) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                   (firstName, lastName, age, height, weight, sex, bmi))
     db.commit()
     user_id = cursor.lastrowid
 
@@ -51,7 +56,7 @@ def submit():
 @app.route('/profile/<int:user_id>')
 def profile(user_id):
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    cursor.execute("SELECT * FROM users WHERE UserID = %s", (user_id,))
     user = cursor.fetchone()
     return render_template('profile/profile.html', user=user)
 
@@ -59,22 +64,26 @@ def profile(user_id):
 @app.route('/edit/<int:user_id>')
 def edit(user_id):
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    cursor.execute("SELECT * FROM users WHERE UserID = %s", (user_id,))
     user = cursor.fetchone()
     return render_template('form/form.html', user=user, edit=True)
 
 # --- Proses update data ---
 @app.route('/update/<int:user_id>', methods=['POST'])
 def update(user_id):
-    nama = request.form['nama']
-    email = request.form['email']
-    umur = request.form['umur']
-    alamat = request.form['alamat']
+    firstName = request.form['first-name']
+    lastName = request.form['last-name']
+    age = request.form['age']
+    height = request.form['height']
+    weight = request.form['weight']
+    sex = request.form['sex']
+    bmi = int(weight) / ((int(height) / 100) ** 2)
+    # bloodType = request.form['blood-type']
 
     cursor = db.cursor()
     cursor.execute("""
-        UPDATE users SET name = %s, email = %s, age = %s, address = %s WHERE id = %s
-    """, (nama, email, umur, alamat, user_id))
+        UPDATE users SET FirstName = %s, LastName = %s, Age = %s, Height = %s, Weight = %s, Sex = %s, BMI = %s WHERE UserID = %s
+    """, (firstName, lastName, age, height, weight, sex, bmi, user_id))
     db.commit()
 
     return redirect(url_for('profile', user_id=user_id))

@@ -25,11 +25,15 @@ form label {
     margin-top: 10px;
 }
 
-form input, form textarea {
+form input, form textarea, form select, form option {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
     box-sizing: border-box;
+}
+
+option, form select {
+    cursor: pointer;
 }
 
 button {
@@ -40,4 +44,20 @@ button {
     color: white;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+button:active {
+  background-color: #1c598a;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #66afe9;
+  outline: none;
 }

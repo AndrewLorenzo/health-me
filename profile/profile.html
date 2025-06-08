@@ -10,10 +10,13 @@
 <body>
     <div class="container">
         <h2>Profil Pengguna</h2>
-        <p><strong>Nama:</strong> {{ user[1] }}</p>
-        <p><strong>Email:</strong> {{ user[2] }}</p>
+        <p><strong>Nama Depan:</strong> {{ user[1] }}</p>
+        <p><strong>Nama Belakang:</strong> {{ user[2] }}</p>
         <p><strong>Umur:</strong> {{ user[3] }}</p>
-        <p><strong>Alamat:</strong> {{ user[4] }}</p>
+        <p><strong>Tinggi Badan:</strong> {{ user[4] }}</p>
+        <p><strong>Berat Badan:</strong> {{ user[5] }}</p>
+        <p><strong>Jenis Kelamin:</strong> {{ user[6] }}</p>
+        <p><strong>BMI:</strong> {{ user[7] }}</p>
         <!-- <a href="/">Kembali ke Form</a> -->
         <a href="{{ url_for('edit', user_id=user[0]) }}"><button>Edit Data</button></a>
     </div>
