@@ -1,0 +1,41 @@
+<!-- templates/form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Data Pribadi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+    <div class="container">
+        <h2>Form Data Pribadi</h2>
+        <form method="POST" action="{{ url_for('setup_profile') if not edit else url_for('edit_profile', user_id=user.id) }}">
+            <label>Nama Depan:</label>
+            <input type="text" name="first-name" value="{{ user.FirstName if edit else '' }}" required><br>
+
+            <label>Nama Belakang:</label>
+            <input type="text" name="last-name" value="{{ user.LastName if edit else '' }}" required><br>
+
+            <label>Umur:</label>
+            <input type="number" name="age" value="{{ user.Age if edit else '' }}" required><br>
+
+            <label>Tinggi Badan (cm):</label>
+            <input type="number" name="height" value="{{ user.Height if edit else '' }}" required><br>
+
+            <label>Berat Badan (kg):</label>
+            <input type="number" name="weight" value="{{ user.Weight if edit else '' }}" required><br>
+
+            <label>Jenis Kelamin:</label>
+            <select name="sex" required>
+                <option value="" disabled {{ 'selected' if not edit }}>-- Pilih --</option>
+                <option value="Laki-laki" {{ 'selected' if edit and user.Sex == 'Laki-laki' else '' }}>Laki-laki</option>
+                <option value="Perempuan" {{ 'selected' if edit and user.Sex == 'Perempuan' else '' }}>Perempuan</option>
+            </select><br>
+
+            <button type="submit">{{ 'Update' if edit else 'Submit' }}</button>
+        </form>
+
+    </div>
+</body>
+</html>
