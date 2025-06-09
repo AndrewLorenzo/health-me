@@ -36,7 +36,7 @@ def login():
                 return redirect('/home')
             else:
                 return redirect('/setup_profile')
-        return render_template('login/login.html', error='Invalid credentials')
+        return render_template('login/login.html', error='Account or password error')
     return render_template('login/login.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
