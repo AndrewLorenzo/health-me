@@ -42,9 +42,14 @@ button {
   padding: 2%;
 }
 
-.logo-container, .logo img {
+.logo-container {
   max-width: 30%;
 }
+
+.logo img {
+  width: auto;
+  height: 200px;
+} 
 
 .form-container {
   width: 60%;
@@ -77,6 +82,14 @@ h1 {
   font-size: 60px;
 }
 
-h1, .sign-up {
+h2 {
+  font-size: 40px;
+}
+
+.description {
+  font-size: 20px;
+}
+
+h1, .sign-up, span {
     color: #3c99ae;
 }
