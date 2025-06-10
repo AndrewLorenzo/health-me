@@ -6,8 +6,21 @@
 </head>
 <body>
 <div class="container">
-    <h2>Selamat Datang</h2>
-
+    <div>
+        <img src="{{ url_for('static', filename='assets/HealthMe_darkteal.png') }}" class="icon" alt="HealthMe Logo">
+        <p>www.healthme.com</p>
+        <div class="nav-bar">
+            <div><a href="/profile">profile</a></div>
+            <div>
+                your activity
+            </div>
+            <div>
+                about us
+            </div>
+        </div>
+    </div>
+    <h2>HealthMe</h2>
+    <p>Get physical activity and food recommendations That suitable for your needs</p>
     <div class="recommendation-box">
         <h3>Kategori Anda: <span class="category">{{ category }}</span></h3>
         <h4>🌿 Tujuan:</h4>
