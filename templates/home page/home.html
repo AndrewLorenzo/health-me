@@ -1,10 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head><title>Beranda</title></head>
+<head>
+    <title>Beranda</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 <body>
+<div class="container">
     <h2>Selamat Datang</h2>
-    <p>Kategori Anda: <strong>{{ category }}</strong></p>
-    <p>Saran: {{ advice }}</p>
-    <a href="/profile">Lihat/Edit Profil</a> | <a href="/logout">Logout</a>
+
+    <div class="recommendation-box">
+        <h3>Kategori Anda: <span class="category">{{ category }}</span></h3>
+        <h4>🌿 Tujuan:</h4>
+        <p>{{ advice.goals }}</p>
+
+        <h4>🏃 Aktivitas Fisik:</h4>
+        <ul>
+            {% for item in advice.activity %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+
+        <h4>🍽 Makanan:</h4>
+        <ul>
+            {% for item in advice.food %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if show_tips %}
+        <div class="tips-box">
+            <h4>🌟 Tips Menjaga Berat Badan Ideal</h4>
+            <ul>
+                {% for tip in advice.tips %}
+                <li>{{ tip }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="nav-links">
+        <a href="/profile" class="btn">Lihat/Edit Profil</a>
+        <a href="/logout" class="btn logout">Logout</a>
+    </div>
+</div>
 </body>
 </html>

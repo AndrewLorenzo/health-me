@@ -87,32 +87,90 @@ def home():
     bmi = profile['BMI'] if profile else 0
     if bmi < 18.5:
         category = "Underweight"
-        advice = "Konsumsi makanan tinggi kalori dan protein. Lakukan olahraga ringan seperti yoga."
     elif 18.5 <= bmi < 25:
         category = "Normal"
-        advice = "Pertahankan pola makan seimbang dan aktivitas fisik teratur seperti jogging."
     else:
         category = "Overweight"
-        advice = "Kurangi makanan berlemak dan lakukan olahraga seperti bersepeda atau berenang."
-    return render_template('home page/home.html', category=category, advice=advice)
+
+    # Semua konten saran & tips disimpan di dictionary
+    advice_data = {
+        "Underweight": {
+            "goals": "Meningkatkan massa otot dan berat badan secara sehat",
+            "activity": [
+                "Latihan kekuatan 3–4x/minggu: angkat beban ringan/sedang, resistance band",
+                "Yoga atau Pilates",
+                "Hindari olahraga kardio berlebihan"
+            ],
+            "food": [
+                "Alpukat, kacang-kacangan, keju, minyak zaitun",
+                "Protein tinggi: telur, ayam, tempe, susu full cream",
+                "Karbo kompleks: nasi merah, ubi, roti gandum",
+                "Snack: smoothie, roti selai kacang"
+            ]
+        },
+        "Normal": {
+            "goals": "Mempertahankan berat badan ideal dan menjaga kebugaran",
+            "activity": [
+                "Kardio ringan–sedang: jalan cepat, bersepeda 150 menit/minggu",
+                "Latihan kekuatan 2–3x/minggu",
+                "Aktivitas harian aktif: jalan kaki, naik tangga"
+            ],
+            "food": [
+                "Porsi seimbang: ½ sayur & buah, ¼ protein, ¼ karbo",
+                "Protein sedang: ayam, ikan, telur",
+                "Lemak sehat: alpukat, kacang",
+                "Cukup air putih: 8–10 gelas/hari"
+            ],
+            "tips": [
+                "Konsisten dengan pola makan sehat",
+                "Sarapan rutin",
+                "Makan 3x + 1–2 snack sehat",
+                "Aktif fisik tiap hari minimal 30 menit",
+                "Tidur cukup (7–8 jam)",
+                "Kelola stres",
+                "Pantau berat badan mingguan"
+            ]
+        },
+        "Overweight": {
+            "goals": "Mengurangi berat badan dan lemak tubuh secara bertahap",
+            "activity": [
+                "Olahraga aerobik: jalan cepat, senam 30–60 menit/hari",
+                "Latihan beban 2–3x/minggu",
+                "Aktif sepanjang hari: kurangi duduk lama"
+            ],
+            "food": [
+                "Kalori terkontrol: porsi kecil, makanan tinggi serat",
+                "Sayur & buah lebih banyak",
+                "Kurangi gula & gorengan",
+                "Protein tinggi & rendah lemak: dada ayam, ikan kukus"
+            ]
+        }
+    }
+
+    return render_template(
+        'home page/home.html',
+        category=category,
+        advice=advice_data[category],
+        show_tips=(category == "Normal")
+    )
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     user_id = session['UserID']
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    if request.method == 'POST':
-        firstName = request.form['first-name']
-        lastName = request.form['last-name']
-        age = request.form['age']
-        height = request.form['height']
-        weight = request.form['weight']
-        sex = request.form['sex']
-        bmi:float = float(weight) / ((float(height) / 100) ** 2)
-        cursor.execute("""
-            UPDATE users SET FirstName = %s, LastName = %s, Age = %s, Height = %s, Weight = %s, Sex = %s, BMI = %s WHERE UserID = %s
-        """, (firstName, lastName, age, height, weight, sex, bmi, user_id))
-        conn.commit()
+    # if request.method == 'POST':
+    #     firstName = request.form['first-name']
+    #     lastName = request.form['last-name']
+    #     age = request.form['age']
+    #     height = request.form['height']
+    #     weight = request.form['weight']
+    #     sex = request.form['sex']
+    #     bmi:float = float(weight) / ((float(height) / 100) ** 2)
+    #     cursor.execute("""
+    #         UPDATE users SET FirstName = %s, LastName = %s, Age = %s, Height = %s, Weight = %s, Sex = %s, BMI = %s WHERE UserID = %s
+    #     """, (firstName, lastName, age, height, weight, sex, bmi, user_id))
+    #     conn.commit()
     cursor.execute("SELECT * FROM UsersProfiles WHERE UserID = %s", (user_id,))
     user = cursor.fetchone()
     return render_template('profile/profile.html', user=user)
