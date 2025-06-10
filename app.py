@@ -1,36 +1,21 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, session
 import mysql.connector
 from mysql.connector import Error
 
-app = Flask(__name__,
-            template_folder='.',  # agar bisa akses folder form/ dan profile/
-            static_folder='form')  # style.css berada di folder form/
+app = Flask(__name__)
+app.secret_key = 'secret_key'
 
-# --- Konfigurasi koneksi ke MySQL (XAMPP/phpMyAdmin) ---
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",           # default user XAMPP
-    password="",           # default password kosong
-    database="software engineering"  # pastikan DB ini sudah kamu buat di phpMyAdmin
-)
+def get_db_connection():
+    return mysql.connector.connect(
+        host='localhost',
+        database='software engineering',  # ganti sesuai nama database Anda
+        user='root',
+        password=''  # ganti sesuai konfigurasi MySQL Anda
+    )
 
-# --- Buat tabel jika belum ada ---
-# cursor = db.cursor()
-# cursor.execute("""
-#     CREATE TABLE IF NOT EXISTS users (
-#         id INT AUTO_INCREMENT PRIMARY KEY,
-#         nama VARCHAR(100),
-#         email VARCHAR(100),
-#         umur INT,
-#         alamat TEXT
-#     )
-# """)
-# db.commit()
-
-# --- login dan session --- 
 @app.route('/')
 def index():
-    if 'user_id' in session:
+    if 'UserID' in session:
         return redirect('/home')
     return redirect('/login')
 
@@ -39,57 +24,67 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        conn = db
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM users WHERE email=%s AND password=%s", (email, password))
+        cursor.execute("SELECT * FROM UsersAccount WHERE Email=%s AND Pass=%s", (email, password))
         user = cursor.fetchone()
         if user:
-            session['user_id'] = user['id']
-            cursor.execute("SELECT * FROM profiles WHERE user_id = %s", (user['id'],))
+            session['UserID'] = user['UserID']
+            cursor.execute("SELECT * FROM UsersProfiles WHERE UserID = %s", (user['UserID'],))
             profile = cursor.fetchone()
             if profile:
                 return redirect('/home')
             else:
-                return redirect('/form')
-        return render_template('login.html', error='Invalid credentials')
+                return redirect('/setup_profile')
+        return render_template('login/login.html', error='Account or password error')
     return render_template('login/login.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        name = request.form['name']
         email = request.form['email']
         password = request.form['password']
-        conn = db
+        confirm_password = request.form['confirm_password']
+        if password != confirm_password:
+            return render_template('signup/signup.html', error='Passwords do not match')
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO users (name, email, password) VALUES (%s, %s, %s)", (name, email, password))
+        cursor.execute("INSERT INTO UsersAccount (Email, Pass) VALUES (%s, %s)", (email, password))
         conn.commit()
+        # Ambil UserID dari user yang baru dibuat
+        cursor.execute("SELECT UserID FROM UsersAccount WHERE Email=%s", (email,))
+        user = cursor.fetchone()
+        session['UserID'] = user[0]  # simpan UserID ke session
         return redirect('/login')
     return render_template('signup/signup.html')
 
-@app.route('/form', methods=['GET', 'POST'])
+@app.route('/setup_profile', methods=['GET', 'POST'])
 def setup_profile():
     if request.method == 'POST':
+        firstName = request.form['first-name']
+        lastName = request.form['last-name']
         age = request.form['age']
-        weight = float(request.form['weight'])
-        height = float(request.form['height'])
-        user_id = session['user_id']
-        conn = db
+        height = request.form['height']
+        weight = request.form['weight']
+        sex = request.form['sex']
+        bmi:float = float(weight) / ((float(height) / 100) ** 2)
+        user_id = session['UserID']
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO profiles (user_id, age, weight, height) VALUES (%s, %s, %s, %s)",
-                       (user_id, age, weight, height))
+        cursor.execute("INSERT INTO UsersProfiles (UserID, FirstName, LastName, Age, Height, Weight, Sex, BMI) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                    (user_id, firstName, lastName, age, height, weight, sex, bmi))
         conn.commit()
         return redirect('/home')
-    return render_template('setup_profile.html')
+    return render_template('form/form.html')
 
 @app.route('/home')
 def home():
-    user_id = session['user_id']
-    conn = db
+    user_id = session['UserID']
+    conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM profiles WHERE user_id = %s", (user_id,))
+    cursor.execute("SELECT * FROM UsersProfiles WHERE UserID = %s", (user_id, ))
     profile = cursor.fetchone()
-    bmi = profile['weight'] / ((profile['height'] / 100) ** 2)
+    bmi = profile['BMI'] if profile else 0
     if bmi < 18.5:
         category = "Underweight"
         advice = "Konsumsi makanan tinggi kalori dan protein. Lakukan olahraga ringan seperti yoga."
@@ -99,12 +94,13 @@ def home():
     else:
         category = "Overweight"
         advice = "Kurangi makanan berlemak dan lakukan olahraga seperti bersepeda atau berenang."
-    return render_template('home/home.html', category=category, advice=advice)
+    return render_template('home page/home.html', category=category, advice=advice)
 
-
-# --- Halaman form ---
-@app.route('/form', methods=['GET', 'POST'])
-def form():
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    user_id = session['UserID']
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
     if request.method == 'POST':
         firstName = request.form['first-name']
         lastName = request.form['last-name']
@@ -112,57 +108,41 @@ def form():
         height = request.form['height']
         weight = request.form['weight']
         sex = request.form['sex']
-        bmi = int(weight) / ((int(height) / 100) ** 2)
-        cursor = db.cursor()
-        cursor.execute("INSERT INTO users (FirstName, LastName, Age, Height, Weight, Sex, BMI) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-                    (firstName, lastName, age, height, weight, sex, bmi))
-        db.commit()
-        return redirect('/home')
-    return render_template('form/form.html')
-
-# --- Submit form ke database ---
-# @app.route('/submit', methods=['POST'])
-# def submit():
-    
-#     # user_id = cursor.lastrowid
-
-#     return redirect(url_for('profile', user_id=user_id))
-
-# --- Halaman profil user ---
-@app.route('/profile/<int:user_id>')
-def profile(user_id):
-    cursor = db.cursor()
-    cursor.execute("SELECT * FROM users WHERE UserID = %s", (user_id,))
+        bmi:float = float(weight) / ((float(height) / 100) ** 2)
+        cursor.execute("""
+            UPDATE users SET FirstName = %s, LastName = %s, Age = %s, Height = %s, Weight = %s, Sex = %s, BMI = %s WHERE UserID = %s
+        """, (firstName, lastName, age, height, weight, sex, bmi, user_id))
+        conn.commit()
+    cursor.execute("SELECT * FROM UsersProfiles WHERE UserID = %s", (user_id,))
     user = cursor.fetchone()
     return render_template('profile/profile.html', user=user)
 
-# --- Halaman edit data user ---
-@app.route('/edit/<int:user_id>')
-def edit(user_id):
-    cursor = db.cursor()
-    cursor.execute("SELECT * FROM users WHERE UserID = %s", (user_id,))
-    user = cursor.fetchone()
-    return render_template('form/form.html', user=user, edit=True)
+@app.route('/edit_profile', methods=['GET', 'POST'])
+def edit_profile():
+    user_id = session['UserID']
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
 
-# --- Proses update data ---
-@app.route('/update/<int:user_id>', methods=['POST'])
-def update(user_id):
-    firstName = request.form['first-name']
-    lastName = request.form['last-name']
-    age = request.form['age']
-    height = request.form['height']
-    weight = request.form['weight']
-    sex = request.form['sex']
-    bmi = int(weight) / ((int(height) / 100) ** 2)
-    # bloodType = request.form['blood-type']
+    # Cek apakah profil sudah ada
+    cursor.execute("SELECT * FROM UsersProfiles WHERE UserID = %s", (user_id,))
+    profile = cursor.fetchone()
 
-    cursor = db.cursor()
-    cursor.execute("""
-        UPDATE users SET FirstName = %s, LastName = %s, Age = %s, Height = %s, Weight = %s, Sex = %s, BMI = %s WHERE UserID = %s
-    """, (firstName, lastName, age, height, weight, sex, bmi, user_id))
-    db.commit()
+    if request.method == 'POST':
+        firstName = request.form['first-name']
+        lastName = request.form['last-name']
+        age = int(request.form['age'])
+        height = float(request.form['height'])
+        weight = float(request.form['weight'])
+        sex = request.form['sex']
+        bmi = weight / ((height / 100) ** 2)
+        cursor.execute("""
+            UPDATE UsersProfiles SET FirstName=%s, LastName=%s, Age=%s, Height=%s, Weight=%s, Sex=%s, BMI=%s WHERE UserID=%s
+        """, (firstName, lastName, age, height, weight, sex, bmi, user_id))
+        conn.commit()
+        return redirect('/home')
 
-    return redirect(url_for('profile', user_id=user_id))
+    return render_template('form/form.html', user=profile, edit=bool(profile))
+
 
 @app.route('/logout')
 def logout():
@@ -170,6 +150,5 @@ def logout():
     return redirect('/login')
 
 
-# --- Jalankan app ---
 if __name__ == '__main__':
     app.run(debug=True)

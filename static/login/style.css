@@ -5,18 +5,25 @@
 
 .outter-container {
   display: flex;
-  /* justify-content: space-evenly; */
+  /* justify-content: space-between; */
   border: 6px solid #3a9ab0;
   border-radius: 30px;
   height: 100%;
   width: 100%;
-  overflow: hidden;
-  padding: 1%;
+  padding: 2%;
+}
+
+.button-container {
+  position: relative;
+  justify-self: center;
+  align-items: center;
 }
 
 button {
-    background-color: #124e5b; /* Dark teal background */
+    background-color: #3c99ae; /* Teal background */
     justify-content: center;
+    align-items: center;
+    position: relative;
     border: none;
     border-radius: 51px;
     color: white;
@@ -25,8 +32,15 @@ button {
     text-decoration: none;
     display: flex;
     font-size: 16px;
-    margin: 4px 2px;
     cursor: pointer;
+}
+
+button:hover {
+    background-color: #2a7f8c; /* Darker teal on hover */
+}
+
+button:active {
+    background-color: #0e4d57; /* Even darker teal on click */
 }
 
 .logo-container {
@@ -54,32 +68,52 @@ button {
 .form-container {
   width: 60%;
   padding: 60px 40px;
-  text-align: center;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  align-items: flex-start;
-}
-
-.login-form label {
-  font-weight: bold;
-  color: #3a9ab0;
-  font-size: 18px;
+  align-items: center;
 }
 
 .login-form input {
   width: 100%;
   padding: 10px;
   border: 6px solid #0e4d57;
-  border-radius: 25px;
-  font-size: 16px;
+  border-radius: 30px;
+  font-size: 18px;
 }
 
-h1 {
+.input-container {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.input-container span {
+ font-size: 20px;
+ width: 180px;
+ font-size: 20px;
+ color: #3a9ab0;
+ font-weight: bold;
+}
+
+.h1 {
   font-size: 60px;
+  text-align: left; /* Aligns HealthMe to the left */
+  width: 100%;
+}
+
+.bottom-link {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 16px;
 }
 
 h2 {
@@ -91,5 +125,18 @@ h2 {
 }
 
 h1, .sign-up, span {
-    color: #3c99ae;
+  color: #3c99ae;
+}
+
+.sign-up{
+  font-weight: bold;
+  text-decoration: none;
+}
+
+h1, .h1 {
+  margin: 0 0 60px 0; /* Only bottom spacing */
+}
+
+.sign-up:hover {
+ color: #2a7f8c; /* Darker teal on hover */
 }
