@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Makanan Sehat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Rekomendasi Makanan untuk Kategori: {{ category }}</h2>
+        <ul>
+            {% for item in foods %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        <a href="/home" class="btn">← Kembali ke Beranda</a>
+    </div>
+</body>
+</html>

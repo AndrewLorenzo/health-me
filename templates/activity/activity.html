@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Aktivitas Fisik</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Aktivitas Fisik untuk Kategori: {{ category }}</h2>
+        <ul>
+            {% for item in activities %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        <a href="/home" class="btn">← Kembali ke Beranda</a>
+    </div>
+</body>
+</html>

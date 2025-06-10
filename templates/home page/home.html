@@ -1,55 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Beranda</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 <div class="container">
-    <div>
-        <img src="{{ url_for('static', filename='assets/HealthMe_darkteal.png') }}" class="icon" alt="HealthMe Logo">
-        <p>www.healthme.com</p>
-        <div class="nav-bar">
-            <div><a href="/profile">profile</a></div>
-            <div>
-                your activity
-            </div>
-            <div>
-                about us
-            </div>
-        </div>
-    </div>
-    <h2>HealthMe</h2>
-    <p>Get physical activity and food recommendations That suitable for your needs</p>
+    <h2>Selamat Datang</h2>
+
     <div class="recommendation-box">
         <h3>Kategori Anda: <span class="category">{{ category }}</span></h3>
-        <h4>🌿 Tujuan:</h4>
-        <p>{{ advice.goals }}</p>
+        <p class="message">{{ message }}</p>
 
-        <h4>🏃 Aktivitas Fisik:</h4>
-        <ul>
-            {% for item in advice.activity %}
-            <li>{{ item }}</li>
-            {% endfor %}
-        </ul>
-
-        <h4>🍽 Makanan:</h4>
-        <ul>
-            {% for item in advice.food %}
-            <li>{{ item }}</li>
-            {% endfor %}
-        </ul>
-
-        {% if show_tips %}
+        {% if tips %}
         <div class="tips-box">
             <h4>🌟 Tips Menjaga Berat Badan Ideal</h4>
             <ul>
-                {% for tip in advice.tips %}
+                {% for tip in tips %}
                 <li>{{ tip }}</li>
                 {% endfor %}
             </ul>
         </div>
         {% endif %}
+
+        <div class="nav-section">
+            <a href="/activity" class="btn">Lihat Aktivitas yang Disarankan</a>
+            <a href="/foods" class="btn">Lihat Rekomendasi Makanan</a>
+        </div>
     </div>
 
     <div class="nav-links">

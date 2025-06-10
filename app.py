@@ -82,77 +82,36 @@ def home():
     user_id = session['UserID']
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM UsersProfiles WHERE UserID = %s", (user_id, ))
+    cursor.execute("SELECT * FROM UsersProfiles WHERE UserID = %s", (user_id,))
     profile = cursor.fetchone()
+
     bmi = profile['BMI'] if profile else 0
     if bmi < 18.5:
         category = "Underweight"
+        message = "Jangan menyerah! Setiap langkah kecil membawa perubahan besar 💪"
     elif 18.5 <= bmi < 25:
         category = "Normal"
+        message = "Pertahankan ritmemu! Kamu sedang berada di jalur yang tepat! ✅"
     else:
         category = "Overweight"
+        message = "Mulai hari ini, kamu bisa bergerak lebih sehat! Kamu mampu! 🔥"
 
-    # Semua konten saran & tips disimpan di dictionary
-    advice_data = {
-        "Underweight": {
-            "goals": "Meningkatkan massa otot dan berat badan secara sehat",
-            "activity": [
-                "Latihan kekuatan 3–4x/minggu: angkat beban ringan/sedang, resistance band",
-                "Yoga atau Pilates",
-                "Hindari olahraga kardio berlebihan"
-            ],
-            "food": [
-                "Alpukat, kacang-kacangan, keju, minyak zaitun",
-                "Protein tinggi: telur, ayam, tempe, susu full cream",
-                "Karbo kompleks: nasi merah, ubi, roti gandum",
-                "Snack: smoothie, roti selai kacang"
-            ]
-        },
-        "Normal": {
-            "goals": "Mempertahankan berat badan ideal dan menjaga kebugaran",
-            "activity": [
-                "Kardio ringan–sedang: jalan cepat, bersepeda 150 menit/minggu",
-                "Latihan kekuatan 2–3x/minggu",
-                "Aktivitas harian aktif: jalan kaki, naik tangga"
-            ],
-            "food": [
-                "Porsi seimbang: ½ sayur & buah, ¼ protein, ¼ karbo",
-                "Protein sedang: ayam, ikan, telur",
-                "Lemak sehat: alpukat, kacang",
-                "Cukup air putih: 8–10 gelas/hari"
-            ],
-            "tips": [
-                "Konsisten dengan pola makan sehat",
-                "Sarapan rutin",
-                "Makan 3x + 1–2 snack sehat",
-                "Aktif fisik tiap hari minimal 30 menit",
-                "Tidur cukup (7–8 jam)",
-                "Kelola stres",
-                "Pantau berat badan mingguan"
-            ]
-        },
-        "Overweight": {
-            "goals": "Mengurangi berat badan dan lemak tubuh secara bertahap",
-            "activity": [
-                "Olahraga aerobik: jalan cepat, senam 30–60 menit/hari",
-                "Latihan beban 2–3x/minggu",
-                "Aktif sepanjang hari: kurangi duduk lama"
-            ],
-            "food": [
-                "Kalori terkontrol: porsi kecil, makanan tinggi serat",
-                "Sayur & buah lebih banyak",
-                "Kurangi gula & gorengan",
-                "Protein tinggi & rendah lemak: dada ayam, ikan kukus"
-            ]
-        }
-    }
+    tips = []
+    if category == "Normal":
+        tips = [
+            "Konsisten dengan pola makan sehat",
+            "Sarapan rutin",
+            "Makan 3x + 1–2 snack sehat",
+            "Aktif fisik tiap hari minimal 30 menit",
+            "Tidur cukup (7–8 jam)",
+            "Kelola stres",
+            "Pantau berat badan mingguan"
+        ]
 
-    return render_template(
-        'home page/home.html',
-        category=category,
-        advice=advice_data[category],
-        show_tips=(category == "Normal")
-    )
+    return render_template('home page/home.html',
+                           category=category,
+                           message=message,
+                           tips=tips)
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -200,6 +159,75 @@ def edit_profile():
         return redirect('/home')
 
     return render_template('form/form.html', user=profile, edit=bool(profile))
+
+@app.route('/activity')
+def activity():
+    user_id = session['UserID']
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT BMI FROM UsersProfiles WHERE UserID = %s", (user_id,))
+    row = cursor.fetchone()
+
+    bmi = row['BMI']
+    if bmi < 18.5:
+        category = "Underweight"
+        activities = [
+            "Latihan kekuatan (3–4x/minggu): angkat beban ringan/sedang",
+            "Yoga atau Pilates",
+            "Hindari olahraga kardio berlebihan"
+        ]
+    elif 18.5 <= bmi < 25:
+        category = "Normal"
+        activities = [
+            "Kardio ringan–sedang: jalan cepat, jogging, bersepeda 150 menit/minggu",
+            "Latihan kekuatan 2–3x/minggu",
+            "Aktivitas harian aktif: naik tangga, jalan kaki"
+        ]
+    else:
+        category = "Overweight"
+        activities = [
+            "Olahraga aerobik: jalan cepat, berenang, senam low impact (30–60 menit/hari)",
+            "Latihan beban 2–3x/minggu untuk meningkatkan metabolisme",
+            "Aktif harian: hindari duduk terlalu lama"
+        ]
+
+    return render_template('activity/activity.html', category=category, activities=activities)
+
+@app.route('/foods')
+def foods():
+    user_id = session['UserID']
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT BMI FROM UsersProfiles WHERE UserID = %s", (user_id,))
+    row = cursor.fetchone()
+
+    bmi = row['BMI']
+    if bmi < 18.5:
+        category = "Underweight"
+        foods = [
+            "Makanan tinggi kalori: alpukat, kacang-kacangan, keju",
+            "Protein tinggi: telur, dada ayam, susu full cream",
+            "Karbo kompleks: nasi merah, kentang, ubi",
+            "Snack sehat: smoothie, roti selai kacang"
+        ]
+    elif 18.5 <= bmi < 25:
+        category = "Normal"
+        foods = [
+            "Porsi seimbang: ½ sayur & buah, ¼ protein, ¼ karbohidrat",
+            "Protein sedang: ayam, ikan, telur",
+            "Lemak sehat: alpukat, kacang, minyak zaitun",
+            "Cukup air putih: 8–10 gelas/hari"
+        ]
+    else:
+        category = "Overweight"
+        foods = [
+            "Kalori terkontrol: makanan tinggi serat, porsi kecil",
+            "Perbanyak sayur dan buah",
+            "Kurangi gula & gorengan",
+            "Protein rendah lemak: putih telur, dada ayam tanpa kulit"
+        ]
+
+    return render_template('foods/foods.html', category=category, foods=foods)
 
 
 @app.route('/logout')
