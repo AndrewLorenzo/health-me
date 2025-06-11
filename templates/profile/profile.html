@@ -8,20 +8,50 @@
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
-    <div class="container">
-        <h2>Profiles</h2>
-        <label for="">
-            <p><strong>First Name:</strong> {{ user.FirstName }}</p>
-        </label>
-        <p><strong>Last Name:</strong> {{ user.LastName }}</p>
-        <p><strong>Age:</strong> {{ user.Age }}</p>
-        <p><strong>Height:</strong> {{ user.Height }}</p>
-        <p><strong>Weight:</strong> {{ user.Weight }}</p>
-        <p><strong>Sex:</strong> {{ user.Sex }}</p>
-        <p><strong>BMI:</strong> {{ user.BMI }}</p>
-        <a method='POST' href="{{ url_for('edit_profile') }}"><button>Edit Data</button></a>
-        <a href="/home"><button>Kembali ke Beranda</button></a>
-        <a href="/logout" class="btn logout"><button>Logout</button></a>
+    <div>
+        <div class="header">
+        <div class="back-symbol"><a href="/home"> < </a></div>
+        <h1>Profiles</h1>
+        <div class="nav-links">
+        <a href="/activity">Your Activity</a>
+        <a href="/foods">Diets</a>
+        <a href="templates/about us.html">About Us</a>
+        <!-- <a href="templates/contacts">Contacts</a> -->
+      </div>
+    </div>
+    <div class="profile-content">
+        <div class="profile-left">
+            <img
+            src="{% if user.Sex == 'Female' %}{{ url_for('static', filename='assets/female dummy.png') }}
+                {% elif user.Sex == 'Male' %}{{ url_for('static', filename='assets/male dummy.png') }}
+                {% else %}{{ url_for('static', filename='assets/default dummy.png') }}{% endif %}"
+            alt="Profile Picture"
+            class="profile-image-placeholder"
+            />
+        </div>
+        <div class="profile-right">
+            <!-- <p><strong>First Name:</strong> {{ user.FirstName }}</p>
+            <p><strong>Last Name:</strong> {{ user.LastName }}</p>
+            <p><strong>Age:</strong> {{ user.Age }}</p>
+            <p><strong>Height:</strong> {{ user.Height }}</p>
+            <p><strong>Weight:</strong> {{ user.Weight }}</p>
+            <p><strong>Sex:</strong> {{ user.Sex }}</p>
+            <p><strong>BMI:</strong> {{ user.BMI }}</p> -->
+            <div class="info-row"><span>First Name</span><input type="text" value="{{ user.FirstName }}" disabled /></div>
+            <div class="info-row"><span>Last Name</span><input type="text" value="{{ user.LastName }}" disabled /></div>
+            <div class="info-row"><span>Age</span><input type="text" value="{{ user.Age }}" disabled /></div>
+            <div class="info-row"><span>Sex</span><input type="text" value="{{ user.Sex }}" disabled /></div>
+            <div class="info-row"><span>Height</span><input type="text" value="{{ user.Height }}" disabled /></div>
+            <div class="info-row"><span>Weight</span><input type="text" value="{{ user.Weight }}" disabled /></div>
+            <a method='POST' href="{{ url_for('edit_profile') }}"><button class="edit-button">Edit Data</button></a>
+            
+            <div class="logout-circle">
+                <a href="/logout" title="Logout">
+                    <img src="{{ url_for('static', filename='assets/logout.png') }}" alt="Logout Icon" />
+                </a>
+            </div>
+
+        </div>
     </div>
 </body>
 </html>

@@ -33,7 +33,7 @@
                 <option value="Female" {{ 'selected' if edit and user.Sex == 'Female' else '' }}>Female</option>
             </select><br>
             {% if edit %}
-            <a href="/home"><button>Back to Home Page</button></a>
+            <a href="/profile"><button>Back to Profiles</button></a>
             {% endif %}
             <button type="submit">{{ 'Update' if edit else 'Submit' }}</button>
         </form>
