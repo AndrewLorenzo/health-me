@@ -11,7 +11,7 @@
     <div>
         <div class="header">
         <div class="back-symbol"><a href="/home"> < </a></div>
-        <h1>Profiles</h1>
+        <h1>Profile</h1>
         <div class="nav-links">
         <a href="/activity">Your Activity</a>
         <a href="/foods">Diets</a>
@@ -22,8 +22,8 @@
     <div class="profile-content">
         <div class="profile-left">
             <img
-            src="{% if user.Sex == 'Female' %}{{ url_for('static', filename='assets/female dummy.png') }}
-                {% elif user.Sex == 'Male' %}{{ url_for('static', filename='assets/male dummy.png') }}
+            src="{% if user.Sex == 'Female' %}{{ url_for('static', filename='assets/waifu.webp') }}
+                {% elif user.Sex == 'Male' %}{{ url_for('static', filename='assets/husbu.webp') }}
                 {% else %}{{ url_for('static', filename='assets/default dummy.png') }}{% endif %}"
             alt="Profile Picture"
             class="profile-image-placeholder"
@@ -43,7 +43,8 @@
             <div class="info-row"><span>Sex</span><input type="text" value="{{ user.Sex }}" disabled /></div>
             <div class="info-row"><span>Height</span><input type="text" value="{{ user.Height }}" disabled /></div>
             <div class="info-row"><span>Weight</span><input type="text" value="{{ user.Weight }}" disabled /></div>
-            <a method='POST' href="{{ url_for('edit_profile') }}"><button class="edit-button">Edit Data</button></a>
+            <div class="info-row"><span>BMI</span><input type="text" value="{{ user.BMI }}" disabled /></div>
+            <div class="info-row"><a method='POST' href="{{ url_for('edit_profile') }}"><button class="edit-button">Edit Profile</button></a></div>
             
             <div class="logout-circle">
                 <a href="/logout" title="Logout">

@@ -32,12 +32,11 @@
                 <option value="Male" {{ 'selected' if edit and user.Sex == 'Male' else '' }}>Male</option>
                 <option value="Female" {{ 'selected' if edit and user.Sex == 'Female' else '' }}>Female</option>
             </select><br>
-            {% if edit %}
-            <a href="/profile"><button>Back to Profiles</button></a>
-            {% endif %}
             <button type="submit">{{ 'Update' if edit else 'Submit' }}</button>
         </form>
-
+        {% if edit %}
+            <a href="/profile"><button>Back to Profiles</button></a>
+        {% endif %}
     </div>
 </body>
 </html>
