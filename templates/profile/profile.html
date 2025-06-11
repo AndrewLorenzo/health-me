@@ -4,22 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <title>HealthMe - Profiles</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile/style.css') }}">
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
     <div class="container">
-        <h2>Profil Pengguna</h2>
-        <p><strong>Nama Depan:</strong> {{ user.FirstName }}</p>
-        <p><strong>Nama Belakang:</strong> {{ user.LastName }}</p>
-        <p><strong>Umur:</strong> {{ user.Age }}</p>
-        <p><strong>Tinggi Badan:</strong> {{ user.Height }}</p>
-        <p><strong>Berat Badan:</strong> {{ user.Weight }}</p>
-        <p><strong>Jenis Kelamin:</strong> {{ user.Sex }}</p>
+        <h2>Profiles</h2>
+        <p><strong>First Name:</strong> {{ user.FirstName }}</p>
+        <p><strong>Last Name:</strong> {{ user.LastName }}</p>
+        <p><strong>Age:</strong> {{ user.Age }}</p>
+        <p><strong>Height:</strong> {{ user.Height }}</p>
+        <p><strong>Weight:</strong> {{ user.Weight }}</p>
+        <p><strong>Sex:</strong> {{ user.Sex }}</p>
         <p><strong>BMI:</strong> {{ user.BMI }}</p>
-        <!-- <a href="/">Kembali ke Form</a> -->
         <a method='POST' href="{{ url_for('edit_profile') }}"><button>Edit Data</button></a>
-        <a href="{{ url_for('home') }}"><button>Kembali ke Beranda</button></a>
+        <a href="/home"><button>Kembali ke Beranda</button></a>
+        <a href="/logout" class="btn logout"><button>Logout</button></a>
     </div>
 </body>
 </html>

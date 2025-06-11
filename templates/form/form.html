@@ -9,30 +9,32 @@
 </head>
 <body>
     <div class="container">
-        <h2>Form Data Pribadi</h2>
+        <h2>Edit Profiles</h2>
         <form method="POST" action="{{ url_for('setup_profile') if not edit else url_for('edit_profile', user_id=user.id) }}">
-            <label>Nama Depan:</label>
+            <label>First Name:</label>
             <input type="text" name="first-name" value="{{ user.FirstName if edit else '' }}" required><br>
 
-            <label>Nama Belakang:</label>
+            <label>Last Name:</label>
             <input type="text" name="last-name" value="{{ user.LastName if edit else '' }}" required><br>
 
-            <label>Umur:</label>
+            <label>Age:</label>
             <input type="number" name="age" value="{{ user.Age if edit else '' }}" required><br>
 
-            <label>Tinggi Badan (cm):</label>
+            <label>Height (cm):</label>
             <input type="number" name="height" value="{{ user.Height if edit else '' }}" required><br>
 
-            <label>Berat Badan (kg):</label>
+            <label>Weight (kg):</label>
             <input type="number" name="weight" value="{{ user.Weight if edit else '' }}" required><br>
 
-            <label>Jenis Kelamin:</label>
+            <label>Sex:</label>
             <select name="sex" required>
                 <option value="" disabled {{ 'selected' if not edit }}>-- Pilih --</option>
-                <option value="Laki-laki" {{ 'selected' if edit and user.Sex == 'Laki-laki' else '' }}>Laki-laki</option>
-                <option value="Perempuan" {{ 'selected' if edit and user.Sex == 'Perempuan' else '' }}>Perempuan</option>
+                <option value="Male" {{ 'selected' if edit and user.Sex == 'Male' else '' }}>Male</option>
+                <option value="Female" {{ 'selected' if edit and user.Sex == 'Female' else '' }}>Female</option>
             </select><br>
-
+            {% if edit %}
+            <a href="/home"><button>Back to Home Page</button></a>
+            {% endif %}
             <button type="submit">{{ 'Update' if edit else 'Submit' }}</button>
         </form>
 
