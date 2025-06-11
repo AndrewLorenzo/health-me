@@ -30,25 +30,27 @@
             class="profile-image-placeholder"
             />
         </div>
-        <form class="profile-right" method="POST" action="{{ url_for('setup_profile') if not edit else url_for('edit_profile', user_id=user.id) }}">
-            <div class="info-row"><span>First Name:</span><input type="text" name="first-name" value="{{ user.FirstName if edit else '' }}" required></div>
-            <div class="info-row"><span>Last Name:</span><input type="text" name="last-name" value="{{ user.LastName if edit else '' }}" required></div>
-            <div class="info-row"><span>Age:</span><input type="number" name="age" value="{{ user.Age if edit else '' }}" required></div>
-            <div class="info-row"><span>Height (cm):</span><input type="number" name="height" value="{{ user.Height if edit else '' }}" required></div>
-            <div class="info-row"><span>Weight (kg):</span><input type="number" name="weight" value="{{ user.Weight if edit else '' }}" required></div>
-            <div class="info-row">
-                <span>Sex:</span>
-                <select class="info-row" name="sex" required>
-                    <option value="" disabled {{ 'selected' if not edit }}>-- Choose --</option>
-                    <option value="Male" {{ 'selected' if edit and user.Sex == 'Male' else '' }}>Male</option>
-                    <option value="Female" {{ 'selected' if edit and user.Sex == 'Female' else '' }}>Female</option>
-                </select>
-            </div>
-            <div class="info-row"><button class="edit-button" type="submit">{{ 'Update' if edit else 'Submit' }}</button></div>
+        <div class="profile-right-wrapper">
+            <form class="profile-right" method="POST" action="{{ url_for('setup_profile') if not edit else url_for('edit_profile', user_id=user.id) }}">
+                <div class="info-row"><span>First Name:</span><input type="text" name="first-name" value="{{ user.FirstName if edit else '' }}" required></div>
+                <div class="info-row"><span>Last Name:</span><input type="text" name="last-name" value="{{ user.LastName if edit else '' }}" required></div>
+                <div class="info-row"><span>Age:</span><input type="number" name="age" value="{{ user.Age if edit else '' }}" required></div>
+                <div class="info-row"><span>Height (cm):</span><input type="number" name="height" value="{{ user.Height if edit else '' }}" required></div>
+                <div class="info-row"><span>Weight (kg):</span><input type="number" name="weight" value="{{ user.Weight if edit else '' }}" required></div>
+                <div class="info-row">
+                    <span>Sex:</span>
+                    <select class="info-row" name="sex" required>
+                        <option value="" disabled {{ 'selected' if not edit }}>-- Choose --</option>
+                        <option value="Male" {{ 'selected' if edit and user.Sex == 'Male' else '' }}>Male</option>
+                        <option value="Female" {{ 'selected' if edit and user.Sex == 'Female' else '' }}>Female</option>
+                    </select>
+                </div>
+                <div class="info-row"><button class="edit-button" type="submit">{{ 'Update' if edit else 'Submit' }}</button></div>
+            </form>
             {% if edit %}
-                <div class="info-row"><a href="/profile"><button class="edit-button">Back to Profiles</button></a></div>
+                    <div class="back-to-profile"><a href="/profile"><button class="edit-button">Back to Profiles</button></a></div>
             {% endif %}
-        </form>
+        </div>
         
     </div>
 </body>

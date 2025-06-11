@@ -67,6 +67,7 @@ h1 {
   justify-content: flex-start;
   align-items: center;
   margin-right: 10%;
+  margin-top: 4px;
 }
 
 .profile-image-placeholder {
@@ -81,7 +82,7 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 35%;
+  width: 100%;
 }
 
 .profile-right a {
@@ -134,4 +135,16 @@ h1 {
 
 .edit-button:active {
   background-color: #0e4d57;
+}
+
+.profile-right-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  gap: 16px;
+}
+
+.back-to-profile {
+  display: flex;
+  justify-content: center;
 }
