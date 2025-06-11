@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthMe - About Us</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='about us/style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <div class="back-symbol"><a href="/home"> < </a></div>
+        <div class="nav-links">
+            <a href="/profile">Profile</a>
+            <a href="/activity">Your Activity</a>
+            <a href="/foods">Diets</a>
+            <!-- <a href="templates/contacts">Contacts</a> -->
+        </div>
+    </div>
+    <div class="about-container">
+        <div class="about-image">
+            <img src="{{url_for('static', filename='assets/about us.png')}}" alt="Doctor Image" />
+        </div>
+        <div class="about-text">
+            <span>About Us</span>
+            <p>
+                HealthMe is a digital platform designed to help users monitor their daily
+                activities and receive personalized diet recommendations based on their
+                body weight and individual needs.
+            </p>
+            <p>
+                Our goal is to support a healthier lifestyle through a measured,
+                data-driven approach. With features that are simple yet functional, we are
+                committed to providing an accessible experience for anyone looking to begin
+                or maintain a more balanced way of living. Through our activity tracking and
+                tailored recommendations, we aim to be a reliable companion in your daily
+                decision-making regarding physical activity and nutritional intake.
+            </p>
+            <p>
+                Thank you for trusting HealthMe as a part of your journey toward a healthier
+                and more organized life.
+            </p>
+        </div>
+    </div>
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+</body>
+</html>

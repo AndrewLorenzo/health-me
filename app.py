@@ -118,18 +118,6 @@ def profile():
     user_id = session['UserID']
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    # if request.method == 'POST':
-    #     firstName = request.form['first-name']
-    #     lastName = request.form['last-name']
-    #     age = request.form['age']
-    #     height = request.form['height']
-    #     weight = request.form['weight']
-    #     sex = request.form['sex']
-    #     bmi:float = float(weight) / ((float(height) / 100) ** 2)
-    #     cursor.execute("""
-    #         UPDATE users SET FirstName = %s, LastName = %s, Age = %s, Height = %s, Weight = %s, Sex = %s, BMI = %s WHERE UserID = %s
-    #     """, (firstName, lastName, age, height, weight, sex, bmi, user_id))
-    #     conn.commit()
     cursor.execute("SELECT * FROM UsersProfiles WHERE UserID = %s", (user_id,))
     user = cursor.fetchone()
     return render_template('profile/profile.html', user=user)
@@ -216,7 +204,7 @@ def foods():
             "Porsi seimbang: ½ sayur & buah, ¼ protein, ¼ karbohidrat",
             "Protein sedang: ayam, ikan, telur",
             "Lemak sehat: alpukat, kacang, minyak zaitun",
-            "Cukup air putih: 8–10 gelas/hari"
+            "Cukup air putih: 8 – 10 gelas/hari"
         ]
     else:
         category = "Overweight"
@@ -233,6 +221,10 @@ def foods():
 def logout():
     session.clear()
     return redirect('/login')
+
+@app.route('/about us')
+def about_us():
+    return render_template('about us/about us.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

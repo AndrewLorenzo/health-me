@@ -40,6 +40,7 @@ img {
 }
 
 .back-symbol a {
+  margin-top: 20px;
   font-size: 60px;
   font-weight: 1000;
   color: #3c99ae;
@@ -139,29 +140,19 @@ img {
 .info-row a {
     text-decoration: none;
 }
-/* 
-.logout-logo {
-  position: absolute;
-  right: 40px;
-  bottom: 40px;
-  text-align: center;
-}
-
-
- */
 
 .logout-circle {
   position: absolute;
   bottom: 10px;
   right: 30px;
-  width: 200px;
-  height: 200px;
-  border-radius: 100%;
+  width: 250px;
+  height: 250px;
+  border-top-left-radius: 100%;
   background-color: #3c99ae;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-end;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -171,6 +162,18 @@ img {
 }
 
 .logout-circle a {
-    width: 85%;
-    height: 85%;
+    width: 70%;
+    height: 70%;
+}
+
+.circle0 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 75px;
+    border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
+    background-color: #3c99ae;
+    transform: translateX(-50%);
 }
