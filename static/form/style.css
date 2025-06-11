@@ -102,7 +102,11 @@ h1 {
   font-size: 18px;
 }
 
-.info-row input {
+.info-row a{
+    text-decoration: none;
+}
+
+.info-row input, .info-row select {
   width: 100%;
   padding: 8px 16px;
   font-size: 16px;
@@ -130,45 +134,4 @@ h1 {
 
 .edit-button:active {
   background-color: #0e4d57;
-}
-
-.info-row a {
-    text-decoration: none;
-}
-
-.logout-circle {
-  position: absolute;
-  bottom: 10px;
-  right: 30px;
-  width: 250px;
-  height: 250px;
-  border-top-left-radius: 100%;
-  background-color: #3c99ae;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.logout-circle img {
-  width: 100%;
-  height: 100%;
-}
-
-.logout-circle a {
-    width: 70%;
-    height: 70%;
-}
-
-.circle0 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 150px;
-    height: 75px;
-    border-top-left-radius: 100%;
-    border-top-right-radius: 100%;
-    background-color: #3c99ae;
-    transform: translateX(-50%);
 }

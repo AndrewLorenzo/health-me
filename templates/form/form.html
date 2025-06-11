@@ -3,40 +3,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>HealthMe - Input Data</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>HealthMe - Edit Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='form/style.css') }}">
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
-    <div class="container">
-        <h2>Edit Profiles</h2>
-        <form method="POST" action="{{ url_for('setup_profile') if not edit else url_for('edit_profile', user_id=user.id) }}">
-            <label>First Name:</label>
-            <input type="text" name="first-name" value="{{ user.FirstName if edit else '' }}" required><br>
-
-            <label>Last Name:</label>
-            <input type="text" name="last-name" value="{{ user.LastName if edit else '' }}" required><br>
-
-            <label>Age:</label>
-            <input type="number" name="age" value="{{ user.Age if edit else '' }}" required><br>
-
-            <label>Height (cm):</label>
-            <input type="number" name="height" value="{{ user.Height if edit else '' }}" required><br>
-
-            <label>Weight (kg):</label>
-            <input type="number" name="weight" value="{{ user.Weight if edit else '' }}" required><br>
-
-            <label>Sex:</label>
-            <select name="sex" required>
-                <option value="" disabled {{ 'selected' if not edit }}>-- Pilih --</option>
-                <option value="Male" {{ 'selected' if edit and user.Sex == 'Male' else '' }}>Male</option>
-                <option value="Female" {{ 'selected' if edit and user.Sex == 'Female' else '' }}>Female</option>
-            </select><br>
-            <button type="submit">{{ 'Update' if edit else 'Submit' }}</button>
-        </form>
+    <div class="header">
         {% if edit %}
-            <a href="/profile"><button>Back to Profiles</button></a>
+            <div class="back-symbol"><a href="/home"> < </a></div>
         {% endif %}
+        <h1>Profile</h1>
+        <div class="nav-links">
+            <a href="/activity">Your Activity</a>
+            <a href="/foods">Diets</a>
+            <a href="/about us">About Us</a>
+            <!-- <a href="templates/contacts">Contacts</a> -->
+        </div>
+    </div>
+    <div class="profile-content">
+        <div class="profile-left">
+            <img
+            src="{% if user.Sex == 'Female' %}{{ url_for('static', filename='assets/waifu.webp') }}
+                {% elif user.Sex == 'Male' %}{{ url_for('static', filename='assets/husbu.webp') }}
+                {% else %}{{ url_for('static', filename='assets/default dummy.png') }}{% endif %}"
+            alt="Profile Picture"
+            class="profile-image-placeholder"
+            />
+        </div>
+        <form class="profile-right" method="POST" action="{{ url_for('setup_profile') if not edit else url_for('edit_profile', user_id=user.id) }}">
+            <div class="info-row"><span>First Name:</span><input type="text" name="first-name" value="{{ user.FirstName if edit else '' }}" required></div>
+            <div class="info-row"><span>Last Name:</span><input type="text" name="last-name" value="{{ user.LastName if edit else '' }}" required></div>
+            <div class="info-row"><span>Age:</span><input type="number" name="age" value="{{ user.Age if edit else '' }}" required></div>
+            <div class="info-row"><span>Height (cm):</span><input type="number" name="height" value="{{ user.Height if edit else '' }}" required></div>
+            <div class="info-row"><span>Weight (kg):</span><input type="number" name="weight" value="{{ user.Weight if edit else '' }}" required></div>
+            <div class="info-row">
+                <span>Sex:</span>
+                <select class="info-row" name="sex" required>
+                    <option value="" disabled {{ 'selected' if not edit }}>-- Choose --</option>
+                    <option value="Male" {{ 'selected' if edit and user.Sex == 'Male' else '' }}>Male</option>
+                    <option value="Female" {{ 'selected' if edit and user.Sex == 'Female' else '' }}>Female</option>
+                </select>
+            </div>
+            <div class="info-row"><button class="edit-button" type="submit">{{ 'Update' if edit else 'Submit' }}</button></div>
+            {% if edit %}
+                <div class="info-row"><a href="/profile"><button class="edit-button">Back to Profiles</button></a></div>
+            {% endif %}
+        </form>
+        
     </div>
 </body>
 </html>
