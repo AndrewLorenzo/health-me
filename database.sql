@@ -1,5 +1,5 @@
 CREATE DATABASE HealthMe;
-USE DATABASE HealthMe;
+USE HealthMe;
 CREATE TABLE UsersAccount (
 	UserID int PRIMARY KEY AUTO_INCREMENT,
     Email varchar(255),
