@@ -3,36 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>HealthMe - Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home/style.css') }}">
 </head>
 <body>
-<div class="container">
+    <div class="header">
+        <div class="nav-links">
+            <a href="/profile">Profile</a>
+            <a href="/activity">Your Activity</a>
+            <a href="/about us">About Us</a>
+            <a href="/foods">Diets</a>
+        </div>
+    </div>
     <h2>HealthMe</h2>
     <span>Get physical activity and food recommendations that suitable for your needs</span>
     <div class="recommendation-box">
         <h3>Kategori Anda: <span class="category">{{ category }}</span></h3>
         <p class="message">{{ message }}</p>
-
-        {% if tips %}
-        <div class="tips-box">
-            <h4>🌟 Tips Menjaga Berat Badan Ideal</h4>
-            <ul>
-                {% for tip in tips %}
-                <li>{{ tip }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-        <div class="nav-section">
-            <a href="/activity" class="btn">Lihat Aktivitas yang Disarankan</a>
-            <a href="/foods" class="btn">Lihat Rekomendasi Makanan</a>
-        </div>
     </div>
-
-    <div class="nav-links">
-        <a href="/profile" class="btn">Lihat/Edit Profil</a>
-    </div>
-</div>
 </body>
 </html>

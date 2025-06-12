@@ -101,22 +101,9 @@ def home():
         category = "Overweight"
         message = "Mulai hari ini, kamu bisa bergerak lebih sehat! Kamu mampu! 🔥"
 
-    tips = []
-    if category == "Normal":
-        tips = [
-            "Konsisten dengan pola makan sehat",
-            "Sarapan rutin",
-            "Makan 3x + 1–2 snack sehat",
-            "Aktif fisik tiap hari minimal 30 menit",
-            "Tidur cukup (7–8 jam)",
-            "Kelola stres",
-            "Pantau berat badan mingguan"
-        ]
-
     return render_template('home/home.html',
                            category=category,
-                           message=message,
-                           tips=tips)
+                           message=message)
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -234,26 +221,56 @@ def foods():
     if bmi < 18.5:
         category = "Underweight"
         foods = [
-            "Makanan tinggi kalori: alpukat, kacang-kacangan, keju",
-            "Protein tinggi: telur, dada ayam, susu full cream",
-            "Karbo kompleks: nasi merah, kentang, ubi",
-            "Snack sehat: smoothie, roti selai kacang"
+            {
+                "image": "assets/underweight1.png",
+                "title1": "Rich in healthy calories",
+                "title2": "High protein sources",
+                "desc1": "avocado, nuts, seeds, cheese, olive oil.",
+                "desc2": "eggs, chicken breast, tempeh, tofu, full cream milk, Greek yogurt."
+            },
+            {
+                "image": "assets/underweight2.png",
+                "title1": "Complex carbohydrates",
+                "title2": "Healthy high energy snacks",
+                "desc1": "brown rice, potatoes, sweet potatoes, whole wheat bread.",
+                "desc2": "smoothies, bread with peanut butter, granola."
+            }
         ]
     elif 18.5 <= bmi < 25:
         category = "Normal"
         foods = [
-            "Porsi seimbang: ½ sayur & buah, ¼ protein, ¼ karbohidrat",
-            "Protein sedang: ayam, ikan, telur",
-            "Lemak sehat: alpukat, kacang, minyak zaitun",
-            "Cukup air putih: 8 – 10 gelas/hari"
+            {
+                "image": "assets/normal1.png",
+                "title1": "Balanced portion",
+                "title2": "Medium protein",
+                "desc1": "½ vegetables and fruits, ¼ protein, ¼ complex carbohydrates.",
+                "desc2": "chicken, fish, eggs, tofu, tempeh."
+            },
+            {
+                "image": "assets/normal2.png",
+                "title1": "Healthy fats",
+                "title2": "Adequate water intake",
+                "desc1": "avocado, nuts, olive oil.",
+                "desc2": "8–10 glasses per day."
+            }
         ]
     else:
         category = "Overweight"
         foods = [
-            "Kalori terkontrol: makanan tinggi serat, porsi kecil",
-            "Perbanyak sayur dan buah",
-            "Kurangi gula & gorengan",
-            "Protein rendah lemak: putih telur, dada ayam tanpa kulit"
+            {
+                "image": "assets/overweight1.png",
+                "title1": "Controlled calories",
+                "title2": "Increase vegetables and fruits",
+                "desc1": "reduce portion sizes, choose low-calorie but high-fiber foods.",
+                "desc2": "helps you feel full longer."
+            },
+            {
+                "image": "assets/overweight2.png",
+                "title1": "Reduce sugar and fried foods",
+                "title2": "High-protein and low-fat",
+                "desc1": "replace with boiled or grilled options.",
+                "desc2": "egg whites, skinless chicken breast, steamed fish."
+            }
         ]
 
     return render_template('foods/foods.html', category=category, foods=foods)
