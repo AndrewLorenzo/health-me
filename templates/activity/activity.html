@@ -3,17 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>HealthMe - Activity</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='activity/style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h2>Aktivitas Fisik untuk Kategori: {{ category }}</h2>
-        <ul>
-            {% for item in activities %}
-            <li>{{ item }}</li>
-            {% endfor %}
-        </ul>
-        <a href="/home" class="btn">← Kembali ke Beranda</a>
+    <img class="dots" src="{{ url_for('static', filename='assets/dots.png') }}" alt="">
+    <div class="header">
+        <div class="back-symbol"><a href="/home"><img src="{{ url_for('static', filename='assets/back_button.png') }}" alt=""></a></div>
+        <h1>Your Activity</h1>
+        <div class="nav-links">
+            <a href="/profile">Profile</a>
+            <a href="/foods">Diets</a>
+            <a href="/about us">About Us</a>
+            <!-- <a href="templates/contacts">Contacts</a> -->
+        </div>
     </div>
+    <h2>Activities according to body weight category: <strong>{{ category }}</strong></h2>
+    <div class="activity-card-container">
+        {% for item in activities %}
+        <div class="activity-card">
+            <img src="{{ url_for('static', filename=item.image) }}" alt="{{ item.title }}">
+            <div class="activity-desc">
+                <strong>{{ item.title }}</strong>
+                <span> {{ item.desc }} </span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="quarter-circle"></div>
+    <img class="elipse" src="{{ url_for('static', filename='assets/elipse.png') }}" alt="">
 </body>
 </html>

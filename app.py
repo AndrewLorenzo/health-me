@@ -165,23 +165,59 @@ def activity():
     if bmi < 18.5:
         category = "Underweight"
         activities = [
-            "Latihan kekuatan (3–4x/minggu): angkat beban ringan/sedang",
-            "Yoga atau Pilates",
-            "Hindari olahraga kardio berlebihan"
+            {
+                "image": "assets/dumbbell.png",
+                "title": "Strength training",
+                "desc": "(3–4 times/week) light to moderate weight lifting, resistance bands, bodyweight training."
+            },
+            {
+                "image": "assets/yoga.png",
+                "title": "Yoga or Pilates:",
+                "desc": "help build muscle and flexibility."
+            },
+            {
+                "image": "assets/running.png",
+                "title": "Avoid excessive cardio exercise",
+                "desc": "that burns a lot of calories."
+            }
         ]
     elif 18.5 <= bmi < 25:
         category = "Normal"
         activities = [
-            "Kardio ringan–sedang: jalan cepat, jogging, bersepeda 150 menit/minggu",
-            "Latihan kekuatan 2–3x/minggu",
-            "Aktivitas harian aktif: naik tangga, jalan kaki"
+            {
+                "image": "assets/dumbbell.png",
+                "title": "Strength training",
+                "desc": "(2-3 times/week) light to moderate weight lifting, resistance bands, bodyweight training."
+            },
+            {
+                "image": "assets/stairs.png",
+                "title": "Active daily activities",
+                "desc": "stair climbing, walking, regular stretching"
+            },
+            {
+                "image": "assets/running.png",
+                "title": "Light-moderate cardio",
+                "desc": "brisk walking, jogging, cycling (150 minutes per week)."
+            }
         ]
     else:
         category = "Overweight"
         activities = [
-            "Olahraga aerobik: jalan cepat, berenang, senam low impact (30–60 menit/hari)",
-            "Latihan beban 2–3x/minggu untuk meningkatkan metabolisme",
-            "Aktif harian: hindari duduk terlalu lama"
+            {
+                "image": "assets/dumbbell.png",
+                "title": "Weight training",
+                "desc": "2–3 times/week to increase metabolism."
+            },
+            {
+                "image": "assets/stairs.png",
+                "title": "Active daily activities",
+                "desc": "Brisk walking, swimming, low-impact gymnastics (30–60 minutes/day)."
+            },
+            {
+                "image": "assets/couch.png",
+                "title": "Cardio exercise",
+                "desc": " Please avoid sitting too long, move more."
+            }
         ]
 
     return render_template('activity/activity.html', category=category, activities=activities)
