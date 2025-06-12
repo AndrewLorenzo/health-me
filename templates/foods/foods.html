@@ -8,7 +8,7 @@
 <body>
     <div class="header">
         <div class="back-symbol"><a href="/home"><img src="{{ url_for('static', filename='assets/back_button.png') }}" alt=""></a></div>
-        <h1>Profile</h1>
+        <h1>Diet Recommendation</h1>
         <div class="nav-links">
             <a href="/profile">Profile</a>
             <a href="/activity">Your Activity</a>
@@ -16,25 +16,24 @@
             <!-- <a href="templates/contacts">Contacts</a> -->
         </div>
     </div>
-    <div class="activity-card-center-outer">
-        <div class="activity-card-container">
-            <span>Diets according to body weight category: <strong>{{category}}</strong></span>
-            {% for item in foods %}
-            <div class="activity-card">
-                <img src="{{ url_for('static', filename=item.image) }}" alt="foods image">
-                <div class="activity-desc">
-                    <div class="activity-title">
-                        <strong>{{ item.title1 }}:</strong>
-                        <span>{{ item.desc1 }}</span>
-                    </div>
-                    <div class="activity-title">
-                        <strong>{{ item.title2 }}:</strong>
-                        <span>{{ item.desc2 }}</span>
-                    </div>
+    <img class="dots" src="{{ url_for('static', filename='assets/dots.png') }}" alt="">
+    <div class="activity-card-container">
+        <span class="title">Diets according to body weight category: <strong>{{category}}</strong></span>
+        {% for item in foods %}
+        <div class="activity-card">
+            <img src="{{ url_for('static', filename=item.image) }}" alt="foods image">
+            <div class="activity-desc">
+                <div class="activity-title">
+                    <span><strong>{{ item.title1 }}: </strong>{{ item.desc1 }}</span>
+                </div>
+                <div class="activity-title">
+                    <span><strong>{{ item.title2 }}: </strong>{{ item.desc2 }}</span>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
+    <div class="quarter-circle"></div>
+    <img class="elipse" src="{{ url_for('static', filename='assets/elipse.png') }}" alt="">
 </body>
 </html>
