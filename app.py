@@ -93,13 +93,13 @@ def home():
     bmi = profile['BMI'] if profile else 0
     if bmi < 18.5:
         category = "Underweight"
-        message = "Jangan menyerah! Setiap langkah kecil membawa perubahan besar 💪"
+        message = "Don't give up! Every small step brings big changes 💪"
     elif 18.5 <= bmi < 25:
         category = "Normal"
-        message = "Pertahankan ritmemu! Kamu sedang berada di jalur yang tepat! ✅"
+        message = "Keep up the pace! You are on the right track! ✅"
     else:
         category = "Overweight"
-        message = "Mulai hari ini, kamu bisa bergerak lebih sehat! Kamu mampu! 🔥"
+        message = "Starting today, you can move towards a healthier you! You can do it! 🔥"
 
     return render_template('home/home.html',
                            category=category,

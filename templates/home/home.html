@@ -16,14 +16,16 @@
             <a href="/foods">Diets</a>
         </div>
     </div>
-    <h2>HealthMe</h2>
-    <span>Get physical activity and food recommendations that suitable for your needs</span>
-    <div class="circle"></div>
-    <div class="image"><img src="{{ url_for('static', filename='assets/doctor_male_patient.png') }}" alt=""></div>
-    <div class="recommendation-box">
-        <h3>Kategori Anda: <span class="category">{{ category }}</span></h3>
-        <p class="message">{{ message }}</p>
+    <img class="dots" src="{{ url_for('static', filename='assets/dots.png') }}" alt="">
+    <div class="container">
+        <h1>HealthMe</h1>
+        <span class="desc">Get physical activity and food recommendations that suitable for your needs</span>
+        <div class="circle"></div>
+        <div class="image"><img src="{{ url_for('static', filename='assets/doctor_male_patient.png') }}" alt=""></div>
+            <span class="category">Your Category: <strong>{{ category }}</strong></span>
+            <span class="message">{{ message }}</span>
     </div>
     <div class="quarter-circle"></div>
+    
 </body>
 </html>
