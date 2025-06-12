@@ -12,7 +12,7 @@
         {% if edit %}
             <div class="back-symbol"><a href="/home"> < </a></div>
         {% endif %}
-        <h1>Profile</h1>
+        <h1>Edit Profile</h1>
         <div class="nav-links">
             <a href="/activity">Your Activity</a>
             <a href="/foods">Diets</a>
@@ -32,13 +32,13 @@
         </div>
         <div class="profile-right-wrapper">
             <form class="profile-right" method="POST" action="{{ url_for('setup_profile') if not edit else url_for('edit_profile', user_id=user.id) }}">
-                <div class="info-row"><span>First Name:</span><input type="text" name="first-name" value="{{ user.FirstName if edit else '' }}" required></div>
-                <div class="info-row"><span>Last Name:</span><input type="text" name="last-name" value="{{ user.LastName if edit else '' }}" required></div>
-                <div class="info-row"><span>Age:</span><input type="number" name="age" value="{{ user.Age if edit else '' }}" required></div>
-                <div class="info-row"><span>Height (cm):</span><input type="number" name="height" value="{{ user.Height if edit else '' }}" required></div>
-                <div class="info-row"><span>Weight (kg):</span><input type="number" name="weight" value="{{ user.Weight if edit else '' }}" required></div>
+                <div class="info-row"><span>First Name</span><input type="text" name="first-name" value="{{ user.FirstName if edit else '' }}" required></div>
+                <div class="info-row"><span>Last Name</span><input type="text" name="last-name" value="{{ user.LastName if edit else '' }}" required></div>
+                <div class="info-row"><span>Age</span><input type="number" name="age" value="{{ user.Age if edit else '' }}" required></div>
+                <div class="info-row"><span>Height (cm)</span><input type="number" name="height" value="{{ user.Height if edit else '' }}" required></div>
+                <div class="info-row"><span>Weight (kg)</span><input type="number" name="weight" value="{{ user.Weight if edit else '' }}" required></div>
                 <div class="info-row">
-                    <span>Sex:</span>
+                    <span>Sex</span>
                     <select class="info-row" name="sex" required>
                         <option value="" disabled {{ 'selected' if not edit }}>-- Choose --</option>
                         <option value="Male" {{ 'selected' if edit and user.Sex == 'Male' else '' }}>Male</option>

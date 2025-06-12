@@ -15,7 +15,6 @@ h1 {
   font-size: 56px;
   text-align: center;
   font-weight: 600;
-  right: 20%;
   margin: 20px 0 18px 0;
 }
 
@@ -30,17 +29,24 @@ h1 {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
   padding-bottom: 20px;
+  padding-left: 15%;
 }
 
 .back-symbol a {
   margin-top: 20px;
+  margin-right: 25px;
   font-size: 60px;
   font-weight: 1000;
   color: #3c99ae;
   cursor: pointer;
   text-decoration: none;
+}
+
+.nav-links {
+  position: absolute;
+  right: 5%;
 }
 
 .nav-links a {

@@ -49,6 +49,11 @@ def signup():
             return render_template('signup/signup.html', error='Passwords do not match')
         conn = get_db_connection()
         cursor = conn.cursor()
+        # Cek apakah email sudah terdaftar
+        cursor.execute("SELECT * FROM UsersAccount WHERE Email = %s", (email,))
+        existing_user = cursor.fetchone()
+        if existing_user:
+            return render_template('signup/signup.html', error='Email is already registered')
         cursor.execute("INSERT INTO UsersAccount (Email, Pass) VALUES (%s, %s)", (email, password))
         conn.commit()
         # Ambil UserID dari user yang baru dibuat
@@ -108,7 +113,7 @@ def home():
             "Pantau berat badan mingguan"
         ]
 
-    return render_template('home page/home.html',
+    return render_template('home/home.html',
                            category=category,
                            message=message,
                            tips=tips)
@@ -144,7 +149,7 @@ def edit_profile():
             UPDATE UsersProfiles SET FirstName=%s, LastName=%s, Age=%s, Height=%s, Weight=%s, Sex=%s, BMI=%s WHERE UserID=%s
         """, (firstName, lastName, age, height, weight, sex, bmi, user_id))
         conn.commit()
-        return redirect('/home')
+        return redirect('/profile')
 
     return render_template('form/form.html', user=profile, edit=bool(profile))
 
