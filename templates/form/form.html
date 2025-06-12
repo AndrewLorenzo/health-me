@@ -10,7 +10,7 @@
 <body>
     <div class="header">
         {% if edit %}
-            <div class="back-symbol"><a href="/home"> < </a></div>
+            <div class="back-symbol"><a href="/home"><img src="{{ url_for('static', filename='assets/back_button.png') }}" alt=""></a></div>
         {% endif %}
         <h1>Edit Profile</h1>
         <div class="nav-links">
@@ -25,7 +25,7 @@
             <img
             src="{% if user.Sex == 'Female' %}{{ url_for('static', filename='assets/waifu.webp') }}
                 {% elif user.Sex == 'Male' %}{{ url_for('static', filename='assets/husbu.webp') }}
-                {% else %}{{ url_for('static', filename='assets/default dummy.png') }}{% endif %}"
+                {% else %}{{ url_for('static', filename='assets/default dummy.jpeg') }}{% endif %}"
             alt="Profile Picture"
             class="profile-image-placeholder"
             />
@@ -35,8 +35,8 @@
                 <div class="info-row"><span>First Name</span><input type="text" name="first-name" value="{{ user.FirstName if edit else '' }}" required></div>
                 <div class="info-row"><span>Last Name</span><input type="text" name="last-name" value="{{ user.LastName if edit else '' }}" required></div>
                 <div class="info-row"><span>Age</span><input type="number" name="age" value="{{ user.Age if edit else '' }}" required></div>
-                <div class="info-row"><span>Height (cm)</span><input type="number" name="height" value="{{ user.Height if edit else '' }}" required></div>
-                <div class="info-row"><span>Weight (kg)</span><input type="number" name="weight" value="{{ user.Weight if edit else '' }}" required></div>
+                <div class="info-row"><span>Height (cm)</span><input type="double" name="height" value="{{ user.Height if edit else '' }}" required></div>
+                <div class="info-row"><span>Weight (kg)</span><input type="double" name="weight" value="{{ user.Weight if edit else '' }}" required></div>
                 <div class="info-row">
                     <span>Sex</span>
                     <select class="info-row" name="sex" required>

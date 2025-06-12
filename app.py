@@ -80,7 +80,7 @@ def setup_profile():
                     (user_id, firstName, lastName, age, height, weight, sex, bmi))
         conn.commit()
         return redirect('/home')
-    return render_template('form/form.html')
+    return render_template('form/form.html', user=None)
 
 @app.route('/home')
 def home():
