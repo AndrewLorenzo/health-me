@@ -33,7 +33,7 @@
         <div class="profile-right-wrapper">
             <form class="profile-right" method="POST" action="{{ url_for('setup_profile') if not edit else url_for('edit_profile', user_id=user.id) }}">
                 <div class="info-row"><span>First Name</span><input type="text" name="first-name" value="{{ user.FirstName if edit else '' }}" required></div>
-                <div class="info-row"><span>Last Name</span><input type="text" name="last-name" value="{{ user.LastName if edit else '' }}" required></div>
+                <div class="info-row"><span>Last Name</span><input type="text" name="last-name" value="{{ user.LastName if edit else '' }}"></div>
                 <div class="info-row"><span>Age</span><input type="number" name="age" value="{{ user.Age if edit else '' }}" required></div>
                 <div class="info-row"><span>Height (cm)</span><input type="double" name="height" value="{{ user.Height if edit else '' }}" required></div>
                 <div class="info-row"><span>Weight (kg)</span><input type="double" name="weight" value="{{ user.Weight if edit else '' }}" required></div>

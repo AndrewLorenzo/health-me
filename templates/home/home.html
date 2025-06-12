@@ -7,6 +7,7 @@
 </head>
 <body>
     <div class="header">
+        <img width="100px" src="{{ url_for('static', filename='assets/HealthMe_darkteal.png') }}" alt="">
         <span>www.healthme.com</span>
         <div class="nav-links">
             <a href="/profile">Profile</a>
@@ -17,9 +18,12 @@
     </div>
     <h2>HealthMe</h2>
     <span>Get physical activity and food recommendations that suitable for your needs</span>
+    <div class="circle"></div>
+    <div class="image"><img src="{{ url_for('static', filename='assets/doctor_male_patient.png') }}" alt=""></div>
     <div class="recommendation-box">
         <h3>Kategori Anda: <span class="category">{{ category }}</span></h3>
         <p class="message">{{ message }}</p>
     </div>
+    <div class="quarter-circle"></div>
 </body>
 </html>
