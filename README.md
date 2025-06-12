@@ -1,5 +1,7 @@
 # health me
 
-1. copy database folder to xampp/mysql/data
-2. run xampp, start apache & mysql, admin mysql
+1. run xampp, start apache & mysql, admin mysql
+2. import database.sql
 3. run app.py
+4. python version 3.12.6
+5. xampp 3.3.0
