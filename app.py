@@ -8,7 +8,7 @@ app.secret_key = 'secret_key'
 def get_db_connection():
     return mysql.connector.connect(
         host='localhost',
-        database='software engineering',  # ganti sesuai nama database Anda
+        database='healthme',  # ganti sesuai nama database Anda
         user='root',
         password=''  # ganti sesuai konfigurasi MySQL Anda
     )
