@@ -9,8 +9,8 @@ CREATE TABLE UsersAccount (
 
 CREATE TABLE UsersProfiles (
     UserID int PRIMARY KEY,
-    FirstName varchar(50),    
-    LastName varchar(50),    
+    FirstName varchar(255),    
+    LastName varchar(255),    
     Age int(11),    
     Height float,
     Weight float,
