@@ -15,9 +15,9 @@
         <h1>Edit Profile</h1>
         <div class="nav-links">
             <a href="/activity">Your Activity</a>
+            <a href="/schedule">Schedule</a>
             <a href="/foods">Diets</a>
             <a href="/about us">About Us</a>
-            <!-- <a href="templates/contacts">Contacts</a> -->
         </div>
     </div>
     <div class="profile-content">
@@ -46,7 +46,7 @@
                     </select>
                 </div>
                 {% if error %}
-                    <p style="color: red; margin: 0;">{{ error }}</p>
+                    <p style="display: flex; color: red; margin: 0; font-weight: bold;">{{ error }}</p>
                 {% endif %}
                 <div class="info-row"><button class="edit-button" type="submit">{{ 'Update' if edit else 'Submit' }}</button></div>
             </form>

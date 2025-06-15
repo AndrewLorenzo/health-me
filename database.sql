@@ -12,8 +12,8 @@ CREATE TABLE UsersProfiles (
     FirstName varchar(255),    
     LastName varchar(255),    
     Age int(11),    
-    Height float,
-    Weight float,
+    Height double,
+    Weight double,
     Sex varchar(10),
     BMI float,
     FOREIGN KEY (UserID) REFERENCES UsersAccount(UserID) ON DELETE CASCADE

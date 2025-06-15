@@ -72,6 +72,17 @@ def setup_profile():
         height = request.form['height']
         weight = request.form['weight']
         sex = request.form['sex']
+        error = None
+        try:
+            age = int(age)
+            height = float(height)
+            weight = float(weight)
+            if height <= 0 or weight <= 0 or age <= 0:
+                error = "Age, height, and weight must be numbers greater than 0."
+        except ValueError:
+            error = "Height and weight must be integer/decimal numbers."
+        if error:
+            return render_template('form/form.html', user=None, error=error)
         bmi:float = float(weight) / ((float(height) / 100) ** 2)
         user_id = session['UserID']
         conn = get_db_connection()
@@ -139,7 +150,7 @@ def edit_profile():
             if height <= 0 or weight <= 0 or age <= 0:
                 error = "Age, height, and weight must be numbers greater than 0."
         except ValueError:
-            error = "Age must be an integer, and height and weight must be decimal numbers."
+            error = "Height and weight must be integer/decimal numbers."
         if error:
             return render_template('form/form.html', user=profile, edit=True, error=error)
         bmi = weight / ((height / 100) ** 2)
