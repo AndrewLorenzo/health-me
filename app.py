@@ -127,10 +127,21 @@ def edit_profile():
     if request.method == 'POST':
         firstName = request.form['first-name']
         lastName = request.form['last-name']
-        age = int(request.form['age'])
-        height = float(request.form['height'])
-        weight = float(request.form['weight'])
+        age = request.form['age']
+        height = request.form['height']
+        weight = request.form['weight']
         sex = request.form['sex']
+        error = None
+        try:
+            age = int(age)
+            height = float(height)
+            weight = float(weight)
+            if height <= 0 or weight <= 0 or age <= 0:
+                error = "Age, height, and weight must be numbers greater than 0."
+        except ValueError:
+            error = "Age must be an integer, and height and weight must be decimal numbers."
+        if error:
+            return render_template('form/form.html', user=profile, edit=True, error=error)
         bmi = weight / ((height / 100) ** 2)
         cursor.execute("""
             UPDATE UsersProfiles SET FirstName=%s, LastName=%s, Age=%s, Height=%s, Weight=%s, Sex=%s, BMI=%s WHERE UserID=%s
@@ -283,6 +294,200 @@ def logout():
 @app.route('/about us')
 def about_us():
     return render_template('about us/about us.html')
+
+
+@app.route('/schedule')
+def schedule():
+    user_id = session['UserID']
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT BMI FROM UsersProfiles WHERE UserID = %s", (user_id,))
+    row = cursor.fetchone()
+
+    meal_plans = {
+        "Underweight": [
+            {
+                "Breakfast": "Oatmeal with whole milk, banana, honey, peanut butter",
+                "WorkoutMorning": "Light strength training or yoga (20 mins)",
+                "Lunch": "Grilled chicken breast, brown rice, avocado, sautéed vegetables",
+                "WorkoutAfternoon": "Short walk or stretching (15 mins)",
+                "Dinner": "Salmon, mashed sweet potatoes, broccoli with butter",
+                "WorkoutEvening": "Pilates or light bodyweight training (15–20 mins)"
+            },
+            {
+                "Breakfast": "Scrambled eggs, toast, yogurt with berries",
+                "WorkoutMorning": "Yoga or resistance band exercises",
+                "Lunch": "Beef stir-fry with rice and vegetables",
+                "WorkoutAfternoon": "Light cycling or brisk walking",
+                "Dinner": "Chicken curry with rice and green beans",
+                "WorkoutEvening": "Stretching + meditation"
+            },
+            {
+                "Breakfast": "Pancakes with syrup, butter, and a glass of milk",
+                "WorkoutMorning": "Bodyweight squats and light dumbbell curls",
+                "Lunch": "Tuna sandwich, eggs, avocado, fruit",
+                "WorkoutAfternoon": "Leisure walk or low-impact cardio",
+                "Dinner": "Baked chicken thighs, couscous, roasted carrots",
+                "WorkoutEvening": "Light yoga for flexibility"
+            },
+            {
+                "Breakfast": "Cereal with whole milk, banana, boiled eggs",
+                "WorkoutMorning": "Upper body dumbbell workout (light)",
+                "Lunch": "Pasta with meatballs, side salad, parmesan",
+                "WorkoutAfternoon": "Short stairs or walking indoors",
+                "Dinner": "Grilled steak, baked potatoes, spinach",
+                "WorkoutEvening": "Foam rolling and stretching"
+            },
+            {
+                "Breakfast": "French toast, banana slices, milk",
+                "WorkoutMorning": "Core workout and breathing exercises",
+                "Lunch": "Chicken wrap with cheese and veggies",
+                "WorkoutAfternoon": "Walk to nearby park or store",
+                "Dinner": "Baked salmon, rice pilaf, roasted asparagus",
+                "WorkoutEvening": "Pilates or posture training"
+            },
+            {
+                "Breakfast": "Omelet with cheese, mushrooms, toast",
+                "WorkoutMorning": "Morning yoga flow (15 mins)",
+                "Lunch": "Turkey sandwich, cheese, potato salad",
+                "WorkoutAfternoon": "Stretching or light mobility routine",
+                "Dinner": "Creamy pasta with shrimp, garlic bread",
+                "WorkoutEvening": "Calm walk or dance workout"
+            },
+            {
+                "Breakfast": "Smoothie bowl with granola",
+                "WorkoutMorning": "Strength training full body (light)",
+                "Lunch": "Fried rice with egg, chicken, vegetables",
+                "WorkoutAfternoon": "Outdoor activity or sports",
+                "Dinner": "Lamb stew with potatoes and carrots",
+                "WorkoutEvening": "Meditation and stretches"
+            }
+        ],
+        "Normal": [
+            {
+                "Breakfast": "Boiled egg, toast, and fruit",
+                "WorkoutMorning": "Jogging or light cardio (20 mins)",
+                "Lunch": "Grilled chicken, quinoa, mixed veggies",
+                "WorkoutAfternoon": "Walk or mobility stretch",
+                "Dinner": "Baked salmon, mashed potatoes, broccoli",
+                "WorkoutEvening": "Stretching or home workout"
+            },
+            {
+                "Breakfast": "Smoothie with banana, yogurt, peanut butter",
+                "WorkoutMorning": "Full-body circuit (moderate)",
+                "Lunch": "Turkey sandwich with salad",
+                "WorkoutAfternoon": "Walking while listening to music",
+                "Dinner": "Stir-fried tofu with brown rice",
+                "WorkoutEvening": "Dance session (20 mins)"
+            },
+            {
+                "Breakfast": "Scrambled eggs and toast",
+                "WorkoutMorning": "Cycling (15–30 mins)",
+                "Lunch": "Chicken Caesar salad with bread",
+                "WorkoutAfternoon": "Light jog or walk",
+                "Dinner": "Tilapia with couscous and spinach",
+                "WorkoutEvening": "Stretch, foam roll"
+            },
+            {
+                "Breakfast": "Overnight oats with fruit",
+                "WorkoutMorning": "Core and stability exercises",
+                "Lunch": "Beef wrap with veggies and hummus",
+                "WorkoutAfternoon": "Mobility work or casual walk",
+                "Dinner": "Grilled chicken, vegetables, sweet potato",
+                "WorkoutEvening": "Yoga or light pilates"
+            },
+            {
+                "Breakfast": "Whole grain cereal with milk",
+                "WorkoutMorning": "Brisk walk or jump rope",
+                "Lunch": "Shrimp fried rice",
+                "WorkoutAfternoon": "Dance or Zumba",
+                "Dinner": "Vegetable lasagna, side salad",
+                "WorkoutEvening": "Relaxing movement session"
+            },
+            {
+                "Breakfast": "Omelet with tomato and cheese",
+                "WorkoutMorning": "Full-body dumbbell workout",
+                "Lunch": "Pasta with chicken and spinach",
+                "WorkoutAfternoon": "House chores actively",
+                "Dinner": "Sautéed tofu, brown rice, vegetables",
+                "WorkoutEvening": "Gentle yoga and cool down"
+            },
+            {
+                "Breakfast": "Granola with yogurt and berries",
+                "WorkoutMorning": "Jog in nature",
+                "Lunch": "Chicken burrito bowl",
+                "WorkoutAfternoon": "Outdoor walk",
+                "Dinner": "Steamed fish with vegetables",
+                "WorkoutEvening": "Stretch or short bike ride"
+            }
+        ],
+        "Overweight": [
+            {
+                "Breakfast": "Boiled eggs and apple slices",
+                "WorkoutMorning": "Morning walk (20–30 mins)",
+                "Lunch": "Grilled chicken salad",
+                "WorkoutAfternoon": "Chair yoga",
+                "Dinner": "Baked fish, steamed broccoli",
+                "WorkoutEvening": "Stretch and meditation"
+            },
+            {
+                "Breakfast": "Smoothie with spinach, banana, almond milk",
+                "WorkoutMorning": "Seated strength routine",
+                "Lunch": "Turkey lettuce wraps",
+                "WorkoutAfternoon": "Short walk indoors",
+                "Dinner": "Grilled tofu, brown rice",
+                "WorkoutEvening": "Gentle stretching"
+            },
+            {
+                "Breakfast": "Oatmeal with berries",
+                "WorkoutMorning": "Low-impact cardio video",
+                "Lunch": "Vegetable stir-fry with tofu",
+                "WorkoutAfternoon": "Standing stretches",
+                "Dinner": "Chicken soup with vegetables",
+                "WorkoutEvening": "Breathing and stretch"
+            },
+            {
+                "Breakfast": "Greek yogurt with nuts",
+                "WorkoutMorning": "Chair cardio workout",
+                "Lunch": "Tuna salad with greens",
+                "WorkoutAfternoon": "Walking around house",
+                "Dinner": "Grilled salmon with asparagus",
+                "WorkoutEvening": "Foam roll or massage"
+            },
+            {
+                "Breakfast": "Avocado toast (1 slice bread)",
+                "WorkoutMorning": "Gentle yoga flow",
+                "Lunch": "Zucchini noodles with turkey meatballs",
+                "WorkoutAfternoon": "Walk with breaks",
+                "Dinner": "Grilled chicken, brown rice",
+                "WorkoutEvening": "Neck and back stretch"
+            },
+            {
+                "Breakfast": "Chia pudding with fruit",
+                "WorkoutMorning": "Dance follow-along (easy)",
+                "Lunch": "Vegetable soup, multigrain toast",
+                "WorkoutAfternoon": "Breathwork + mobility",
+                "Dinner": "Steamed fish, veggie mix",
+                "WorkoutEvening": "Relaxation routine"
+            },
+            {
+                "Breakfast": "Scrambled egg whites, orange",
+                "WorkoutMorning": "Walk to local store",
+                "Lunch": "Chicken wrap with greens",
+                "WorkoutAfternoon": "Chair tai-chi",
+                "Dinner": "Vegetarian chili",
+                "WorkoutEvening": "Mindful stretching"
+            }
+        ]
+    }
+    bmi = row['BMI']
+    if bmi < 18.5:
+        category = "Underweight"
+    elif 18.5 <= bmi < 25:
+        category = "Normal"
+    else:
+        category = "Overweight"
+    return render_template('schedule/schedule.html', category=category, meals=meal_plans[category])
 
 if __name__ == '__main__':
     app.run(debug=True)

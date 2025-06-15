@@ -45,6 +45,9 @@
                         <option value="Female" {{ 'selected' if edit and user.Sex == 'Female' else '' }}>Female</option>
                     </select>
                 </div>
+                {% if error %}
+                    <p style="color: red; margin: 0;">{{ error }}</p>
+                {% endif %}
                 <div class="info-row"><button class="edit-button" type="submit">{{ 'Update' if edit else 'Submit' }}</button></div>
             </form>
             {% if edit %}

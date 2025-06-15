@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Schedule</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='schedule/style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <div class="back-symbol"><a href="/home"><img src="{{ url_for('static', filename='assets/back_button.png') }}" alt=""></a></div>
+        <div class="nav-links">
+            <a href="/profile">Profile</a>
+            <a href="/activity">Activity</a>
+            <a href="/foods">Diets</a>
+            <a href="/about us">About Us</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Personal Schedule</h1>
+        <p>This is your personal activity and diet schedule based on your category: <strong>{{ category }}</strong></p>
+        <table>
+            <tr>
+                <th></th>
+                {% for i in range(7) %}
+                    <th>{{ ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'][i] }}</th>
+                {% endfor %}
+            </tr>
+            {% for key in ['Breakfast', 'WorkoutMorning', 'Lunch', 'WorkoutAfternoon', 'Dinner', 'WorkoutEvening'] %}
+                <tr>
+                    <td style="background-color: #124e5b; color: white;">{{ key.replace('Workout', 'Workout ').replace('Morning', 'Morning').replace('Afternoon', 'Afternoon').replace('Evening', 'Evening') }}</td>
+                    {% for day in meals %}
+                        <td>{{ day[key] }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="quarter-circle"></div>
+</body>
+</html>
