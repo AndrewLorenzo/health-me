@@ -96,10 +96,10 @@ h1 {
 .image {
   z-index: 5;
   position: absolute;
-  width: 56%;
+  width: 45%;
   height: auto;
   bottom: 0;
-  right: 150px;
+  right: 185px;
 }
 
 .image img {
